@@ -27,15 +27,32 @@
         --project-text-color: #fff;
         --project-name-font-size: 24px;
       }
+      #particles-js{
+        width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #000;
+  background-image: url('');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+
+}
+.body-particles{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
     </style>
 
     <!-- # Misc settings -->
     <title>Spaceley - Portfolio</title>
-
+    <div id="particles-js"></div>
     <!-- # Sidebar Profiles, links, and text -->
     <meta
       data-sidebar="profile"
-      data-avatar-url="./images/profile/avatar.PNG"
+      data-avatar-url="./images/profile/avatar.png"
       data-header="Hey, my name is Spaceley"
       data-text="This is where I showcase all the stuff I’ve made, fixed, or broken.. then fixed."
     >
@@ -52,33 +69,13 @@
     >
     <meta
       data-sidebar="link"
-      data-text="Visit my Fiverr page!"
-      data-link="www.fiverr.com/mrspaceley"
-      data-icon-url="./images/icons/link.svg"
-    >
-    <meta
-      data-sidebar="link"
       data-text="Visit my store! (coming soon)"
       data-link=""
       data-icon-url="./images/icons/link.svg"
     >
 
     <!-- # Portfolio Projects -->
-  <meta
-      data-project
-      data-name="YOUTUBE BANNER"
-      data-img-url="./images/projects/mysticx.png"
-      data-description="Youtube banner made for Mystic.<br><br>Finished on 10/03/2021"
-      data-link=""
-    >
-  <meta
-      data-project
-      data-name="YOUTUBE BANNER"
-      data-img-url="./images/projects/spaceley.png"
-      data-description="Youtube banner made for myself.<br><br>Finished on 10/03/2021"
-      data-link=""
-    >  
-  <meta
+    <meta
       data-project
       data-name="THREAD DESIGN"
       data-img-url="./images/projects/thread.jpg"
@@ -105,6 +102,9 @@
   </style>
 </head>
 <body>
+  <div class="body-particles"></div>
+  <script src="particles.js"></script>
+  <script src="js/app.js"></script>
   <main><ul class=sidebar></ul><section class=projects></section></main>
   <script type="text/javascript">
     var $=function(t){return Array.from(document.querySelectorAll(t))},$s=function(t){return $("meta[data-"+t+"]")},getCSSTimeInMS=function(t){var e=t.toString(),i=e.toLowerCase().endsWith("ms"),r=e.toLowerCase().endsWith("s");return i?parseInt(e.slice(0,-2)):r?1e3*parseInt(e.slice(0,-1)):0},projectTransitionDuration=getCSSTimeInMS(getComputedStyle(document.body).getPropertyValue("--project-transition-duration").replace(/\s/g,"")),Project=function(t){Object.assign(this,t.dataset)};Project.prototype.cardClick=function(t){var e=this.container;this.isOpen()?t.target===this.backBtn&&(e.classList.remove("open"),e.style.height="",e.parentNode.classList.remove("viewing-project")):(projects.forEach((function(t){t.container.classList.remove("open")})),e.classList.add("open"),e.parentNode.classList.add("viewing-project"))},Project.prototype.isOpen=function(){return-1!==Array.from(this.container.classList).indexOf("open")},Project.prototype.create=function(){var t=this;return this.container=Object.assign(document.createElement("div"),{className:"project hidden"}),this.container.style.backgroundImage="url("+this.imgUrl+")",this.container.dataset.project=this.name.replace(/[^a-zA-Z-\s0-9]/g,"").toLowerCase().replace(/\s/g,"-"),this.container.innerHTML=['<h2 class="project__name">'+this.name+"</h2>",'<img class="project__picture" src="'+this.imgUrl+'" />',this.description&&this.description.split("\\n").map((function(t){return'<p class="project__description">'+(t||"</br>")+"</p>"})).join(""),this.link?'<a class="project__link link" href="'+this.link+'" target="_blank">'+this.link+"</a>":""].join(""),this.picture=this.container.querySelector(".project__picture"),this.backBtn=this.container.querySelector(".project__backbtn"),this.container.addEventListener("click",(function(e){return t.cardClick.call(t,e)})),this.picture.addEventListener("click",(function(e){return t.pictureClicked.call(t,e)})),this.container},Project.prototype.pictureClicked=function(t){this.isOpen()&&window.open(this.picture.src,"_blank")},Project.prototype.display=function(){this.container.classList.remove("hidden")};var Profile=function(t){Object.assign(this,t.dataset)};Profile.prototype.create=function(){return this.container=Object.assign(document.createElement("section"),{className:"profile hidden"}),this.container.innerHTML=[this.avatarUrl?'<a href="?" class="profile__anchor">':"",this.avatarUrl&&'<img class="profile__avatar" src="'+this.avatarUrl+'" />'||"",this.avatarUrl?"</a>":"",this.header||this.text?'<section class="bio">':"",this.header&&'<h3 class="bio__header">'+this.header+"</h3>"||"",this.text&&'<p class="bio__content">'+this.text+"</p>"||"",this.header||this.text?"</section>":""].join(""),this.container},Profile.prototype.display=function(){this.container.classList.remove("hidden")};var SideBarItem=function(t){console.log({itemSettings:t}),Object.assign(this,t.dataset)};SideBarItem.prototype.create=function(){return this.item=Object.assign(document.createElement("li"),{className:"sidebar__item hidden"}),this.item.innerHTML=[this.iconUrl&&'<img class="sidebar__icon" src="'+this.iconUrl+'">',this.link&&'<a class="sidebar__link" href="'+this.link+'" target="_blank">'+(this.text||"")+"</a>"||'<span class="sidebar__text">'+(this.text||"")+"</span>"].join(""),this.item},SideBarItem.prototype.display=function(){this.container.classList.remove("hidden")};var sidebarContainer=$(".sidebar")[0],sidebarItems=$s("sidebar");sidebarItems.forEach((function(t){var e=t.dataset.sidebar.toLowerCase(),i="profile"===e?new Profile(t):"text"===e||"link"===e?new SideBarItem(t):"";""!==i&&sidebarContainer.appendChild(i.create())}));var projectContainer=$(".projects")[0],projects=$s("project").map((function(t){return new Project(t)}));projects.forEach((function(t,e){projectContainer.appendChild(t.create()),setTimeout((function(){t.display()}),100*e)}));
